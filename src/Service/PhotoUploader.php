@@ -1,0 +1,46 @@
+<?php
+
+namespace App\Service;
+
+use App\Entity\Photo;
+use App\Form\PhotoType;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Form\FormInterface;
+
+class PhotoUploader {
+
+    private $parameterBag;
+
+    /**
+     * PhotoUploader constructor.
+     * @param $parameterBag
+     */
+    public function __construct(ParameterBagInterface $parameterBag) {
+        $this->parameterBag = $parameterBag;
+    }
+
+    public function uploadPhoto(FormInterface $photoField) : ?Photo {
+        $imageFile = $photoField->get('image')->getData();
+
+        if ($imageFile) {
+            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+            $safeFilename = transliterator_transliterate('Any-Latin; Latin-ASCII; [^A-Za-z0-9_] remove; Lower()', $originalFilename);
+            $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+
+            try {
+                $imageFile->move(
+                    $this->parameterBag->get('advert_images_path'),
+                    $newFilename
+                );
+            }
+            catch (FileException $e) {
+                // exception
+            }
+            $photoField->getData()->setUrl($newFilename);
+
+            return $photoField->getData();
+        }
+
+        return null;
+    }
+}
