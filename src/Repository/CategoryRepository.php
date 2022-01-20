@@ -12,10 +12,19 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Category[]    findAll()
  * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CategoryRepository extends ServiceEntityRepository
-{
+class CategoryRepository extends ServiceEntityRepository {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
     }
+
+    public function findById($id): Category {
+        $qb = $this->createQueryBuilder('a')
+            ->where('a.id=:id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
 }

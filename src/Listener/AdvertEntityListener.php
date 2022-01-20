@@ -8,8 +8,8 @@ use App\Entity\Advert;
 use Doctrine\ORM\Event\LifecycleEventArgs;
 use Doctrine\ORM\Query\Expr\Math;
 
-class AdvertEntityListener
-{
+class AdvertEntityListener {
+
     private $authors = ['Frederic', 'Jean', 'Marc', 'Yael', 'Sasuke2000', 'DarkArnaud'];
 
     public function prePersist(Advert $entity, LifecycleEventArgs $args) {

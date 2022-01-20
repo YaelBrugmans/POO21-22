@@ -12,17 +12,16 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method AppAdvert[]    findAll()
  * @method AppAdvert[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AppAdvertRepository extends ServiceEntityRepository
-{
+class AppAdvertRepository extends ServiceEntityRepository {
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, AppAdvert::class);
     }
 
-    // /**
-    //  * @return AppAdvert[] Returns an array of AppAdvert objects
-    //  */
     /*
+    * @return AppAdvert[] Returns an array of AppAdvert objects
+    */
     public function findByExampleField($value)
     {
         return $this->createQueryBuilder('a')
@@ -31,20 +30,14 @@ class AppAdvertRepository extends ServiceEntityRepository
             ->orderBy('a.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?AppAdvert
-    {
+    public function findOneBySomeField($value): ?AppAdvert {
         return $this->createQueryBuilder('a')
             ->andWhere('a.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
-    */
 }

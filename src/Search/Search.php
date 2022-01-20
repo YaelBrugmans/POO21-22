@@ -3,6 +3,7 @@
 namespace App\Search;
 
 class Search {
+
     private string $keyword;
     private $categories;
 

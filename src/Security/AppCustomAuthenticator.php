@@ -17,14 +17,13 @@ use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
 class AppCustomAuthenticator extends AbstractLoginFormAuthenticator {
+
     use TargetPathTrait;
 
     public const LOGIN_ROUTE = 'app_login';
-
     private UrlGeneratorInterface $urlGenerator;
 
-    public function __construct(UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(UrlGeneratorInterface $urlGenerator) {
         $this->urlGenerator = $urlGenerator;
     }
 
@@ -40,7 +39,7 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator {
         );
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response{
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
             return new RedirectResponse($targetPath);
         }
@@ -51,5 +50,12 @@ class AppCustomAuthenticator extends AbstractLoginFormAuthenticator {
     protected function getLoginUrl(Request $request): string {
         return $this->urlGenerator->generate(self::LOGIN_ROUTE);
     }
+
+    /*
+    public function supports(Request $request) {
+        return self::LOGIN_ROUTE === $request->attributes->get('_route')
+            && $request->isMethod('POST');
+    }
+    */
 
 }

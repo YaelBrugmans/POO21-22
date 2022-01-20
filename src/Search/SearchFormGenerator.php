@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\Routing\RouterInterface;
 
 class SearchFormGenerator {
+
     private FormFactoryInterface $formFactory;
     private RouterInterface $router;
 

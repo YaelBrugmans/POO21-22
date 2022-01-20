@@ -36,6 +36,7 @@ class PhotoUploader {
             catch (FileException $e) {
                 // exception
             }
+
             $photoField->getData()->setUrl($newFilename);
 
             return $photoField->getData();
@@ -43,4 +44,5 @@ class PhotoUploader {
 
         return null;
     }
+
 }
